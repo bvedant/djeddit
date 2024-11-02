@@ -22,6 +22,12 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = 'posts/post_form.html'
     fields = ['title', 'content']
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        for field in form.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+        return form
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)

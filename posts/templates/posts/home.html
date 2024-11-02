@@ -1,16 +1,24 @@
 {% extends "posts/base.html" %}
 {% block content %}
-    {% for post in posts %}
-        <article class="card mb-3">
-            <div class="card-body">
-                <h2 class="card-title">
-                    <a href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
-                </h2>
-                <p class="card-text">{{ post.content|truncatewords:50 }}</p>
-                <div class="text-muted">
-                    By {{ post.author }} on {{ post.date_posted|date:"F d, Y" }}
+    {% if posts %}
+        {% for post in posts %}
+            <article class="card mb-3">
+                <div class="card-body">
+                    <h2 class="card-title">
+                        <a href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
+                    </h2>
+                    <p class="card-text">{{ post.content|truncatewords:50 }}</p>
+                    <div class="text-muted">
+                        By {{ post.author }} on {{ post.date_posted|date:"F d, Y" }}
+                    </div>
                 </div>
+            </article>
+        {% endfor %}
+    {% else %}
+        <div class="card">
+            <div class="card-body text-center">
+                <p class="card-text fs-5 text-muted">No posts yet. Start the conversation!</p>
             </div>
-        </article>
-    {% endfor %}
+        </div>
+    {% endif %}
 {% endblock content %} 

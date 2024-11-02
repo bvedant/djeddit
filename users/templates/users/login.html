@@ -1,6 +1,6 @@
 {% extends "posts/base.html" %}
 {% block content %}
-    <h2>Welcome Back</h2>
+    <h2>Welcome back!</h2>
     <form method="POST">
         {% csrf_token %}
         {% for field in form %}
@@ -16,9 +16,9 @@
         <button type="submit">Sign In</button>
     </form>
     <p>
-        <a href="{% url 'password_reset' %}">Forgot Password?</a>
+        <a href="{% url 'password_reset' %}">Forgot password?</a>
     </p>
     <p>
-        Need an account? <a href="{% url 'register' %}">Sign Up</a>
+        Need an account? <a href="{% url 'register' %}">Sign up</a>
     </p>
 {% endblock content %} 

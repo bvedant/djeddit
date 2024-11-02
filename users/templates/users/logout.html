@@ -1,13 +1,5 @@
 {% extends "posts/base.html" %}
 {% block content %}
-    <div class="card">
-        <div class="card-body">
-            <h2>You have been logged out</h2>
-            <div class="border-top pt-3">
-                <small class="text-muted">
-                    <a href="{% url 'login' %}">Log In Again</a>
-                </small>
-            </div>
-        </div>
-    </div>
+    <h2>You have been logged out</h2>
+    <p><a href="{% url 'login' %}">Log In Again</a></p>
 {% endblock content %} 

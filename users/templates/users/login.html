@@ -1,43 +1,24 @@
 {% extends "posts/base.html" %}
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h2 class="card-title text-center mb-4">Welcome Back</h2>
-                <form method="POST">
-                    {% csrf_token %}
-                    {% for field in form %}
-                        <div class="mb-3">
-                            <label for="{{ field.id_for_label }}" class="form-label">
-                                {{ field.label }}
-                                {% if field.field.required %}
-                                    <span class="text-danger">*</span>
-                                {% endif %}
-                            </label>
-                            {{ field.errors }}
-                            {{ field }}
-                            {% if field.help_text %}
-                                <div class="form-text">{{ field.help_text }}</div>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary btn-lg" type="submit">Sign In</button>
-                    </div>
-                    <div class="text-center mt-3">
-                        <small>
-                            <a href="{% url 'password_reset' %}" class="text-decoration-none">Forgot Password?</a>
-                        </small>
-                    </div>
-                </form>
-                <div class="text-center mt-4">
-                    <small class="text-muted">
-                        Need an account? <a href="{% url 'register' %}" class="text-decoration-none">Sign Up</a>
-                    </small>
-                </div>
+    <h2>Welcome Back</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+            <div>
+                <label>{{ field.label }}</label>
+                {{ field.errors }}
+                {{ field }}
+                {% if field.help_text %}
+                    <p>{{ field.help_text }}</p>
+                {% endif %}
             </div>
-        </div>
-    </div>
-</div>
+        {% endfor %}
+        <button type="submit">Sign In</button>
+    </form>
+    <p>
+        <a href="{% url 'password_reset' %}">Forgot Password?</a>
+    </p>
+    <p>
+        Need an account? <a href="{% url 'register' %}">Sign Up</a>
+    </p>
 {% endblock content %} 

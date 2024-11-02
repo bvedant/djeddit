@@ -1,0 +1,16 @@
+{% extends "posts/base.html" %}
+{% block content %}
+    {% for post in posts %}
+        <article class="card mb-3">
+            <div class="card-body">
+                <h2 class="card-title">
+                    <a href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
+                </h2>
+                <p class="card-text">{{ post.content|truncatewords:50 }}</p>
+                <div class="text-muted">
+                    By {{ post.author }} on {{ post.date_posted|date:"F d, Y" }}
+                </div>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock content %} 

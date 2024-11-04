@@ -10,8 +10,9 @@ nav {
     padding: 15px 30px;
     background: #333;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 30px;
 }
 
 nav div {
@@ -23,6 +24,22 @@ nav div {
 nav a {
     color: white;
     text-decoration: none;
+}
+
+nav button {
+    background: none;
+    border: none;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+}
+
+nav form {
+    margin: 0;
+    padding: 0;
 }
 
 .container {

@@ -83,7 +83,7 @@
                                     <div class="reply" id="comment-{{ reply.id }}">
                                         <p class="comment-content">{{ reply.content }}</p>
                                         <small>
-                                            By {{ reply.author }} ��� {{ reply.date_posted|time_ago_with_timestamp|safe }}
+                                            By {{ reply.author }} &bull; {{ reply.date_posted|time_ago_with_timestamp|safe }}
                                             {% if reply.edited_at %}
                                                 • edited {{ reply.edited_at|time_ago_with_timestamp|safe }}
                                             {% endif %}

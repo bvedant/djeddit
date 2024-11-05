@@ -18,6 +18,13 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
     template_name = 'posts/post_detail.html'
+    slug_url_kwarg = 'slug'
+
+    def get_object(self):
+        return get_object_or_404(
+            Post,
+            slug=self.kwargs['slug']
+        )
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
@@ -29,11 +36,11 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
     
     def get_success_url(self):
-        return reverse('post-detail', kwargs={'pk': self.object.pk})
+        return reverse('post-detail', kwargs={'slug': self.object.slug})
 
 @login_required
-def add_comment(request, post_id, parent_id=None):
-    post = get_object_or_404(Post, id=post_id)
+def add_comment(request, slug, parent_id=None):
+    post = get_object_or_404(Post, slug=slug)
     if request.method == 'POST':
         content = request.POST.get('content')
         if content:
@@ -46,36 +53,27 @@ def add_comment(request, post_id, parent_id=None):
                 content=content,
                 parent=parent
             )
-    return redirect('post-detail', pk=post_id)
+    return redirect('post-detail', slug=slug)
 
 @login_required
 def edit_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
-    
-    if comment.author != request.user:
+    if request.user != comment.author:
         return HttpResponseForbidden()
     
     if request.method == 'POST':
-        content = request.POST.get('content')
-        if content and content != comment.content:  # Only mark as edited if content changed
-            comment.content = content
-            comment.edited_at = timezone.now()
-            comment.save()
-        return redirect('post-detail', pk=comment.post.id)
-    
+        comment.content = request.POST.get('content')
+        comment.edited_at = timezone.now()
+        comment.save()
+        return redirect('post-detail', slug=comment.post.slug)
     return HttpResponseForbidden()
 
 @login_required
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
-    
-    # Check if the user is the author of the comment
-    if comment.author != request.user:
+    if request.user != comment.author:
         return HttpResponseForbidden()
     
-    if request.method == 'POST':
-        post_id = comment.post.id
-        comment.delete()
-        return redirect('post-detail', pk=post_id)
-    
-    return HttpResponseForbidden()
+    post_slug = comment.post.slug
+    comment.delete()
+    return redirect('post-detail', slug=post_slug)

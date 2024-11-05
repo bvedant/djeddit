@@ -138,3 +138,34 @@ button {
 .hidden {
     display: none;
 }
+
+.comment-actions {
+    margin: 5px 0;
+}
+
+.edit-button, .delete-button {
+    background: none;
+    border: none;
+    color: #666;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.9em;
+    margin-right: 10px;
+}
+
+.edit-form {
+    margin: 10px 0;
+    padding: 10px;
+    background: #f9f9f9;
+}
+
+.edit-form textarea {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 10px;
+}

@@ -37,6 +37,11 @@
             const form = document.getElementById(formId);
             form.classList.toggle('hidden');
         }
+
+        function toggleEditForm(commentId) {
+            const form = document.getElementById(`edit-form-${commentId}`);
+            form.classList.toggle('hidden');
+        }
     </script>
 </body>
 </html>

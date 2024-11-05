@@ -9,7 +9,7 @@
                 </h2>
                 <p>{{ post.content|truncatewords:50 }}</p>
                 <p>
-                    By {{ post.author }} • {{ post.date_posted|time_ago }}
+                    By {{ post.author }} • {{ post.date_posted|time_ago_with_timestamp|safe }}
                 </p>
             </article>
         {% endfor %}

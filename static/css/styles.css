@@ -169,3 +169,8 @@ button {
     display: flex;
     gap: 10px;
 }
+
+[title] {
+    cursor: help;
+    border-bottom: 1px dotted #666;
+}

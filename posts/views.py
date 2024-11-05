@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -28,3 +28,17 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     
     def get_success_url(self):
         return reverse('post-detail', kwargs={'pk': self.object.pk})
+
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        if content:
+            Comment.objects.create(
+                post=post,
+                author=request.user,
+                content=content
+            )
+            return redirect('post-detail', pk=post_id)
+    return redirect('post-detail', pk=post_id)

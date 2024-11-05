@@ -5,4 +5,31 @@
         <p>{{ object.content }}</p>
         <p>By {{ object.author }} on {{ object.date_posted|date:"F d, Y" }}</p>
     </article>
+
+    {% if user.is_authenticated %}
+        <div class="comment-form">
+            <h3>Add a Comment</h3>
+            <form method="POST" action="{% url 'add-comment' object.id %}">
+                {% csrf_token %}
+                <div>
+                    <textarea name="content" rows="3" required></textarea>
+                </div>
+                <button type="submit">Post Comment</button>
+            </form>
+        </div>
+    {% endif %}
+
+    <div class="comments">
+        <h3>Comments</h3>
+        {% if object.comments.all %}
+            {% for comment in object.comments.all %}
+                <div class="comment">
+                    <p>{{ comment.content }}</p>
+                    <small>By {{ comment.author }} on {{ comment.date_posted|date:"F d, Y" }}</small>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No comments yet. Be the first to comment!</p>
+        {% endif %}
+    </div>
 {% endblock content %} 

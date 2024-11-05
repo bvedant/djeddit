@@ -1,6 +1,97 @@
 {% extends "posts/base.html" %}
 {% block content %}
-    <h2>{{ user.username }}'s profile</h2>
-    <p>Email: {{ user.email }}</p>
-    <p>Joined: {{ user.date_joined|date:"F d, Y" }}</p>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-image">
+                <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s profile picture">
+            </div>
+            <div class="profile-info">
+                <h2>{{ user.username }}</h2>
+                {% if user.profile.bio %}
+                    <p class="bio">{{ user.profile.bio }}</p>
+                {% endif %}
+                <div class="profile-meta">
+                    {% if user.profile.location %}
+                        <span>📍 {{ user.profile.location }}</span>
+                    {% endif %}
+                    {% if user.profile.website %}
+                        <span>🌐 <a href="{{ user.profile.website }}" target="_blank">Website</a></span>
+                    {% endif %}
+                    <span>📅 Joined: {{ user.date_joined|date:"F d, Y" }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-stats">
+            <div class="stat-item">
+                <div class="stat-number">{{ user.post_set.count }}</div>
+                <div class="stat-label">Posts</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{ user.comment_set.count }}</div>
+                <div class="stat-label">Comments</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{ user.upvoted_posts.count }}</div>
+                <div class="stat-label">Upvotes</div>
+            </div>
+        </div>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if user == request.user %}
+            <div class="profile-edit">
+                <h3>Edit Profile</h3>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ u_form.as_p }}
+                        {{ p_form.as_p }}
+                    </div>
+                    <button type="submit">Update Profile</button>
+                </form>
+            </div>
+        {% endif %}
+
+        <div class="profile-content">
+            <div class="profile-posts">
+                <h3>Recent Posts</h3>
+                {% if user.post_set.all %}
+                    {% for post in user.post_set.all|slice:":5" %}
+                        <div class="post-item">
+                            <h4><a href="{% url 'post-detail' post.slug %}">{{ post.title }}</a></h4>
+                            <span class="post-meta">{{ post.date_posted|timesince }} ago</span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No posts yet.</p>
+                {% endif %}
+            </div>
+
+            <div class="profile-comments">
+                <h3>Recent Comments</h3>
+                {% if user.comment_set.all %}
+                    {% for comment in user.comment_set.all|slice:":5" %}
+                        <div class="comment-item">
+                            <p>{{ comment.content|truncatechars:100 }}</p>
+                            <span class="comment-meta">
+                                on <a href="{% url 'post-detail' comment.post.slug %}">{{ comment.post.title }}</a>
+                                • {{ comment.date_posted|timesince }} ago
+                            </span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No comments yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock content %} 

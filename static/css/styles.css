@@ -272,3 +272,250 @@ article:last-child {
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
+
+/* Profile Styles */
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    display: flex;
+    gap: 30px;
+    padding: 30px;
+    background: #333;
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+
+.profile-image img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h2 {
+    margin: 0 0 15px 0;
+    font-size: 24px;
+    color: #fff;
+}
+
+.profile-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: #ccc;
+    font-size: 0.9em;
+    margin-top: 15px;
+}
+
+.profile-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.profile-meta a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.profile-meta a:hover {
+    text-decoration: underline;
+}
+
+.bio {
+    margin: 10px 0;
+    line-height: 1.6;
+    color: #eee;
+}
+
+.profile-edit {
+    padding: 30px;
+    border-top: 1px solid #eee;
+}
+
+.profile-edit h3 {
+    margin: 0 0 20px 0;
+    color: #333;
+}
+
+.profile-content {
+    padding: 30px;
+}
+
+.profile-content h3 {
+    margin: 0 0 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #333;
+    color: #333;
+}
+
+.post-item, .comment-item {
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #f8f8f8;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.post-item:hover, .comment-item:hover {
+    background: #f0f0f0;
+}
+
+.post-item h4 {
+    margin: 0 0 8px 0;
+}
+
+.post-item h4 a {
+    color: #333;
+    text-decoration: none;
+}
+
+.post-item h4 a:hover {
+    color: #666;
+}
+
+.post-meta, .comment-meta {
+    font-size: 0.85em;
+    color: #666;
+}
+
+/* Form Styling */
+.profile-edit form {
+    display: grid;
+    gap: 20px;
+}
+
+.profile-edit .form-group {
+    display: grid;
+    gap: 15px;
+}
+
+.profile-edit label {
+    font-weight: 500;
+    color: #333;
+}
+
+.profile-edit input[type="text"],
+.profile-edit input[type="email"],
+.profile-edit input[type="url"],
+.profile-edit input[type="date"],
+.profile-edit textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.profile-edit input[type="file"] {
+    padding: 10px 0;
+}
+
+.profile-edit button {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.profile-edit button:hover {
+    background: #444;
+}
+
+/* Activity Sections */
+.profile-posts,
+.profile-comments {
+    margin-bottom: 40px;
+}
+
+.comment-item p {
+    margin: 0 0 8px 0;
+    color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .profile-image {
+        margin: 0 auto;
+    }
+
+    .profile-meta {
+        justify-content: center;
+    }
+
+    .profile-content {
+        padding: 20px;
+    }
+}
+
+/* Messages Styling */
+.messages {
+    margin-bottom: 20px;
+}
+
+.messages .success {
+    background: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.messages .error {
+    background: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* Stats Section */
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 4px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #666;
+}

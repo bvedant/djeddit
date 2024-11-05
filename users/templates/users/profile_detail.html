@@ -1,0 +1,60 @@
+{% extends "posts/base.html" %}
+{% load custom_filters %}
+
+{% block content %}
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-image">
+                <img src="{{ profile_user.profile.image.url }}" alt="{{ profile_user.username }}'s profile picture">
+            </div>
+            <div class="profile-info">
+                <h2>{{ profile_user.username }}</h2>
+                {% if profile_user.profile.bio %}
+                    <p class="bio">{{ profile_user.profile.bio }}</p>
+                {% endif %}
+                <div class="profile-meta">
+                    {% if profile_user.profile.location %}
+                        <span class="location">📍 {{ profile_user.profile.location }}</span>
+                    {% endif %}
+                    {% if profile_user.profile.website %}
+                        <span class="website">🌐 <a href="{{ profile_user.profile.website }}" target="_blank">Website</a></span>
+                    {% endif %}
+                    <span class="joined">Joined: {{ profile_user.date_joined|date:"F d, Y" }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <div class="profile-posts">
+                <h3>Posts</h3>
+                {% if posts %}
+                    {% for post in posts %}
+                        <div class="post-item">
+                            <h4><a href="{% url 'post-detail' post.slug %}">{{ post.title }}</a></h4>
+                            <span class="post-meta">{{ post.date_posted|time_ago_with_timestamp|safe }}</span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No posts yet.</p>
+                {% endif %}
+            </div>
+
+            <div class="profile-comments">
+                <h3>Recent Comments</h3>
+                {% if comments %}
+                    {% for comment in comments %}
+                        <div class="comment-item">
+                            <p>{{ comment.content }}</p>
+                            <span class="comment-meta">
+                                on <a href="{% url 'post-detail' comment.post.slug %}">{{ comment.post.title }}</a>
+                                • {{ comment.date_posted|time_ago_with_timestamp|safe }}
+                            </span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No comments yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %} 

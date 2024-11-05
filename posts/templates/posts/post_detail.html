@@ -1,18 +1,18 @@
 {% extends "posts/base.html" %}
+{% load custom_filters %}
 {% block content %}
     <article>
         <h2>{{ object.title }}</h2>
         <p>{{ object.content }}</p>
-        <p>By {{ object.author }} on {{ object.date_posted|date:"F d, Y" }}</p>
+        <p>by {{ object.author }} • {{ object.date_posted|time_ago }}</p>
     </article>
 
     {% if user.is_authenticated %}
         <div class="comment-form">
-            <h3>Add a Comment</h3>
             <form method="POST" action="{% url 'add-comment' object.id %}">
                 {% csrf_token %}
                 <div>
-                    <textarea name="content" rows="3" required></textarea>
+                    <textarea name="content" rows="3" required placeholder="Add a comment"></textarea>
                 </div>
                 <button type="submit">Post Comment</button>
             </form>
@@ -26,7 +26,7 @@
                 {% if not comment.parent %} {# Only show top-level comments first #}
                     <div class="comment">
                         <p>{{ comment.content }}</p>
-                        <small>By {{ comment.author }} on {{ comment.date_posted|date:"F d, Y" }}</small>
+                        <small>By {{ comment.author }} • {{ comment.date_posted|time_ago }}</small>
                         
                         {% if user.is_authenticated %}
                             <button class="reply-button" onclick="toggleReplyForm('reply-form-{{ comment.id }}')">
@@ -47,7 +47,7 @@
                             {% for reply in comment.replies.all %}
                                 <div class="reply">
                                     <p>{{ reply.content }}</p>
-                                    <small>By {{ reply.author }} on {{ reply.date_posted|date:"F d, Y" }}</small>
+                                    <small>By {{ reply.author }} • {{ reply.date_posted|time_ago }}</small>
                                 </div>
                             {% endfor %}
                         </div>

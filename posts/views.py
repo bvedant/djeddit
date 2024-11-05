@@ -30,15 +30,18 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return reverse('post-detail', kwargs={'pk': self.object.pk})
 
 @login_required
-def add_comment(request, post_id):
+def add_comment(request, post_id, parent_id=None):
     post = get_object_or_404(Post, id=post_id)
     if request.method == 'POST':
         content = request.POST.get('content')
         if content:
+            parent = None
+            if parent_id:
+                parent = get_object_or_404(Comment, id=parent_id)
             Comment.objects.create(
                 post=post,
                 author=request.user,
-                content=content
+                content=content,
+                parent=parent
             )
-            return redirect('post-detail', pk=post_id)
     return redirect('post-detail', pk=post_id)

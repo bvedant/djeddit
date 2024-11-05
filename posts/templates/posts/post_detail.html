@@ -23,10 +23,36 @@
         <h3>Comments</h3>
         {% if object.comments.all %}
             {% for comment in object.comments.all %}
-                <div class="comment">
-                    <p>{{ comment.content }}</p>
-                    <small>By {{ comment.author }} on {{ comment.date_posted|date:"F d, Y" }}</small>
-                </div>
+                {% if not comment.parent %} {# Only show top-level comments first #}
+                    <div class="comment">
+                        <p>{{ comment.content }}</p>
+                        <small>By {{ comment.author }} on {{ comment.date_posted|date:"F d, Y" }}</small>
+                        
+                        {% if user.is_authenticated %}
+                            <button class="reply-button" onclick="toggleReplyForm('reply-form-{{ comment.id }}')">
+                                Reply
+                            </button>
+                            <form id="reply-form-{{ comment.id }}" 
+                                  class="reply-form hidden" 
+                                  method="POST" 
+                                  action="{% url 'reply-comment' object.id comment.id %}">
+                                {% csrf_token %}
+                                <textarea name="content" rows="2" required></textarea>
+                                <button type="submit">Submit Reply</button>
+                            </form>
+                        {% endif %}
+
+                        {# Show replies #}
+                        <div class="replies">
+                            {% for reply in comment.replies.all %}
+                                <div class="reply">
+                                    <p>{{ reply.content }}</p>
+                                    <small>By {{ reply.author }} on {{ reply.date_posted|date:"F d, Y" }}</small>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
         {% else %}
             <p>No comments yet. Be the first to comment!</p>

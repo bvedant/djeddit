@@ -32,5 +32,11 @@
         {% endif %}
         {% block content %}{% endblock %}
     </main>
+    <script>
+        function toggleReplyForm(formId) {
+            const form = document.getElementById(formId);
+            form.classList.toggle('hidden');
+        }
+    </script>
 </body>
 </html>

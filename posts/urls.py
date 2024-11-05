@@ -7,4 +7,5 @@ urlpatterns = [
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:post_id>/comment/', views.add_comment, name='add-comment'),
+    path('post/<int:post_id>/comment/<int:parent_id>/reply/', views.add_comment, name='reply-comment'),
 ]
